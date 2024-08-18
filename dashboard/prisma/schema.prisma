@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model acquisitionsources {
+  acquisitionsourceid String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sourcename          String                @unique @db.VarChar(255)
+  customeracquisition customeracquisition[]
+}
+
+model categories {
+  categoryid   String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  categoryname String     @db.VarChar(100)
+  products     products[]
+}
+
+model changetypes {
+  changetypeid   String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  changetypename String      @unique @db.VarChar(50)
+  inventory      inventory[]
+}
+
+model customeracquisition {
+  acquisitionid       String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerid          String?             @db.Uuid
+  acquisitionsourceid String?             @db.Uuid
+  acquisitiondate     DateTime?           @default(now()) @db.Timestamp(6)
+  acquisitionsources  acquisitionsources? @relation(fields: [acquisitionsourceid], references: [acquisitionsourceid], onUpdate: NoAction)
+  customers           customers?          @relation(fields: [customerid], references: [customerid], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customerfeedback {
+  feedbackid   String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  productid    String?    @db.Uuid
+  customerid   String?    @db.Uuid
+  rating       Int?
+  feedback     String?
+  feedbackdate DateTime?  @default(now()) @db.Timestamp(6)
+  customers    customers? @relation(fields: [customerid], references: [customerid], onDelete: Cascade, onUpdate: NoAction)
+  products     products?  @relation(fields: [productid], references: [productid], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model customers {
+  customerid          String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username            String                @unique @db.VarChar(255)
+  firstname           String                @db.VarChar(255)
+  lastname            String                @db.VarChar(255)
+  email               String                @unique @db.VarChar(255)
+  phone               String?               @db.VarChar(20)
+  address             String?
+  createdat           DateTime?             @default(now()) @db.Timestamp(6)
+  updatedat           DateTime?             @default(now()) @db.Timestamp(6)
+  customeracquisition customeracquisition[]
+  customerfeedback    customerfeedback[]
+  orders              orders[]
+}
+
+model inventory {
+  inventoryid    String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  productid      String?      @db.Uuid
+  changetypeid   String?      @db.Uuid
+  changequantity Int
+  changedat      DateTime?    @default(now()) @db.Timestamp(6)
+  changetypes    changetypes? @relation(fields: [changetypeid], references: [changetypeid], onDelete: Restrict, onUpdate: NoAction)
+  products       products?    @relation(fields: [productid], references: [productid], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model orderdetails {
+  orderdetailid String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderid       String?   @db.Uuid
+  productid     String?   @db.Uuid
+  quantity      Int
+  saleamount    Decimal   @db.Decimal(10, 2)
+  orders        orders?   @relation(fields: [orderid], references: [orderid], onDelete: Cascade, onUpdate: NoAction)
+  products      products? @relation(fields: [productid], references: [productid], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model orders {
+  orderid      String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  customerid   String?        @db.Uuid
+  orderdate    DateTime?      @default(now()) @db.Timestamp(6)
+  orderstatus  String         @db.VarChar(50)
+  totalamount  Decimal        @db.Decimal(10, 2)
+  orderdetails orderdetails[]
+  customers    customers?     @relation(fields: [customerid], references: [customerid], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model products {
+  productid        String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title            String             @db.VarChar(255)
+  description      String?
+  price            Decimal            @db.Decimal(10, 2)
+  categoryid       String?            @db.Uuid
+  imageurl         String?            @db.VarChar(255)
+  stockquantity    Int?               @default(0)
+  createdat        DateTime?          @default(now()) @db.Timestamp(6)
+  updatedat        DateTime?          @default(now()) @db.Timestamp(6)
+  customerfeedback customerfeedback[]
+  inventory        inventory[]
+  orderdetails     orderdetails[]
+  categories       categories?        @relation(fields: [categoryid], references: [categoryid], onUpdate: NoAction)
+}
