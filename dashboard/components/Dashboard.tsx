@@ -1,95 +1,154 @@
-
-
-import { Grid, Box } from '@mantine/core';
-import StatusCard from '@/components/TotalSoldCard';
+import { Grid, Box, Loader, Center, Alert} from '@mantine/core';
+import StatusCard from '@/components/StatusCard'; 
+import { IconAlertCircle } from '@tabler/icons-react';
 import DataTable from '@/components/DataTable';
-import SalesLineGraph from '@/components/SalesLineGraph';
+import LineGraphCard from '@/components/LineGraphCard';
+import { useFeedbackData } from '@/app/hooks/useFeedbackData';
+import { useProductData } from '@/app/hooks/useProductData';
+import { useDashboardStats } from '@/app/hooks/useDashboardStats';
+import { useDailyOrders } from '@/app/hooks/useDailyOrders';
+import { FeedbackData, ProductData, DailyOrder } from '@/types/dashboardTypes';
 
-// Sample data for FeedbackTable
+// Columns for FeedbackTable
 const feedbackColumns = [
-  { key: 'name', label: 'Name' },
+  { key: 'customer', label: 'Customer' },
   { key: 'product', label: 'Product' },
   { key: 'feedbackDate', label: 'Feedback Date' },
   { key: 'rating', label: 'Rating' },
   { key: 'comments', label: 'Comments' },
 ];
 
-const feedbackData = [
-  { name: 'John Doe', product: 'Product A', feedbackDate: '2023-08-01', rating: 4, comments: 'Great product, very useful!' },
-  { name: 'Jane Smith', product: 'Product B', feedbackDate: '2023-08-05', rating: 5, comments: 'Excellent quality and fast shipping!' },
-  { name: 'Alice Johnson', product: 'Product C', feedbackDate: '2023-08-10', rating: 3, comments: 'Good, but could be improved.' },
-  { name: 'Bob Brown', product: 'Product D', feedbackDate: '2023-08-12', rating: 2, comments: 'Not satisfied with the purchase.' },
-];
-
-// Sample data for Product Inventory Table
+// Columns for Product Inventory Table
 const productColumns = [
   { key: 'product', label: 'Product' },
   { key: 'amount', label: 'Amount in Stock' },
   { key: 'lastRestock', label: 'Last Restock Date' },
 ];
 
-const productData = [
-  { product: 'Product A', amount: 100, lastRestock: '2023-07-20' },
-  { product: 'Product B', amount: 50, lastRestock: '2023-07-15' },
-  { product: 'Product C', amount: 200, lastRestock: '2023-08-01' },
-  { product: 'Product D', amount: 0, lastRestock: '2023-06-30' },
-];
+
+function handleLoadingAndError(loadingStates: boolean[], errors: (Error | null)[]) {
+  if (loadingStates.some(loading => loading)) {
+    return (
+      <Center style={{ minHeight: '100vh' }}>
+        <Loader size="lg" />
+      </Center>
+    );
+  }
+
+  for (const error of errors) {
+    if (error) {
+      return (
+        <Center style={{ minHeight: '100vh' }}>
+          <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red" radius="md" variant="filled">
+            {error.message}
+          </Alert>
+        </Center>
+      );
+    }
+  }
+
+  return null;
+}
 
 export default function Dashboard() {
+  const { feedbackData, isLoading: isFeedbackLoading, error: feedbackError } = useFeedbackData(10000);
+  const { productData, isLoading: isProductLoading, error: productError } = useProductData(10000);
+  const { stats, isLoading: isStatsLoading, error: statsError } = useDashboardStats(10000);
+  const { dailyOrders, isLoading: isDailyOrdersLoading, error: dailyOrdersError } = useDailyOrders(10000);
+
+  const loadingStates = [isStatsLoading, isFeedbackLoading, isProductLoading, isDailyOrdersLoading];
+  const errors = [statsError, feedbackError, productError, dailyOrdersError];
+
+  const loadingOrError = handleLoadingAndError(loadingStates, errors);
+  if (loadingOrError) return loadingOrError;
+ 
+  // Format feedback data to match columns
+  const formattedFeedbackData = feedbackData.map((item: FeedbackData) => ({
+    customer: `${item.customers?.firstname} ${item.customers?.lastname}`,
+    product: item.products?.title,
+    feedbackDate: new Date(item.feedbackdate).toLocaleDateString(),
+    rating: item.rating,
+    comments: item.feedback,
+  }));
+
+  // Format product data to match columns
+  const formattedProductData = productData.map((item: ProductData) => ({
+    product: item.title,
+    amount: item.stockquantity,
+    lastRestock: new Date(item.updatedat).toLocaleDateString(),
+  }));
+
+  // Format daily orders data to use local date format
+  const formattedDailyOrders = dailyOrders.map((item: DailyOrder) => ({
+    date: new Date(item.date).toLocaleDateString(),
+    sales: item.sales,
+  }));
   
   return (
     <>
       <Grid gutter="md" mb={16}>
-        <Grid.Col span={3}>
-          <StatusCard
-            title="Revenue"
-            value={1200}
-            type="dollar"
-            status="increase"
-            statusColor="green"
-          />
+        <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
+          {stats && (
+            <StatusCard
+              title="Revenue"
+              value={stats.totalRevenue}
+              type="dollar"
+              status={stats.totalRevenueStatus}
+              percentageChange={stats.totalRevenueChange}
+            />
+          )}
         </Grid.Col>
-        <Grid.Col span={3}>
-          <StatusCard
-            title="Customer Acuquistion Rate (CaR)"
-            value={15.5}
-            type="percentage"
-            status="decrease"
-            statusColor="red"
-          />
+        <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
+          {stats && (
+            <StatusCard
+              title="Customer Acquisition Rate (CaR)"
+              value={stats.acquisitionRate}
+              type="percentage"
+              status={stats.acquisitionRateStatus}
+              percentageChange={stats.acquisitionRateChange}
+            />
+          )}
         </Grid.Col>
-        <Grid.Col span={3}>
-          <StatusCard
-            title="New Customers"
-            value={300}
-            type="number"
-            status="increase"
-            statusColor="green"
-          />
+        <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
+          {stats && (
+            <StatusCard
+              title="New Customers"
+              value={stats.newCustomers}
+              type="number"
+              status={stats.newCustomersStatus}
+              percentageChange={stats.newCustomersChange}
+            />
+          )}
         </Grid.Col>
-        <Grid.Col span={3}>
-          <StatusCard
-            title="Orders"
-            value={1000 }
-            type="number"
-            status="increase"
-            statusColor="green"
-          />
+        <Grid.Col span={{ base: 12, md: 12, lg: 3 }}>
+          {stats && (
+            <StatusCard
+              title="Total Orders"
+              value={stats.totalOrders}
+              type="number"
+              status={stats.totalOrdersStatus}
+              percentageChange={stats.totalOrdersChange}
+            />
+          )}
         </Grid.Col>
       </Grid>
       <Grid gutter="md" mb={16}>
-        <Grid.Col span={{ base: 9, md: 12, lg: 9 }}>
+        <Grid.Col span={{ base: 12, md: 12, lg: 9 }}>
           <Box>
-            <DataTable columns={feedbackColumns} data={feedbackData} title="Customer Feedback" />
+            <DataTable columns={feedbackColumns} data={formattedFeedbackData} title="Customer Feedback" />
           </Box>
         </Grid.Col>
-        <Grid.Col span={{ base: 3, md: 12, lg: 3 }}>
+        <Grid.Col span={{ base: 12, xs: 12, md: 12, lg: 3 }}>
           <Box>
-            <DataTable columns={productColumns} data={productData} title="Product Inventory" />
+            <DataTable columns={productColumns} data={formattedProductData} title="Product Inventory" />
           </Box>
         </Grid.Col>
       </Grid>
-      <SalesLineGraph />
+      <LineGraphCard 
+        data={formattedDailyOrders} 
+        title="Daily Orders" 
+        seriesName="sales" 
+      />
     </>
   );
 }

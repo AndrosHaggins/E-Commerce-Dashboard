@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu, UnstyledButton, Group, useMantineColorScheme, MantineColorScheme, Text, rem } from '@mantine/core';
+import { Menu, UnstyledButton, Group, useMantineColorScheme, MantineColorScheme, Text } from '@mantine/core';
 import { IconChevronDown, IconCheck } from '@tabler/icons-react';
 
 export function ColorSchemeToggle() {

@@ -4,7 +4,7 @@ import { Group, AppShell, Burger, Title, Box} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import Sidebar from '@/components/Sidebar';
-import Report from './Report';
+
 
 const ReportPage = () => {
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
@@ -35,7 +35,7 @@ const ReportPage = () => {
     </AppShell.Navbar>
     <AppShell.Main>
  
-    <Report/>
+ 
     </AppShell.Main>
   </AppShell>
   );

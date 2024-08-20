@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Text, Card, ScrollArea} from '@mantine/core';
+import { Table, Card, ScrollArea, Title} from '@mantine/core';
 
 interface Column {
   key: string;
@@ -25,9 +25,7 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data, title }) => {
 
   return (
     <Card shadow="md"  radius="md" w="100%" mt={20} >
-      <Text size="lg" fw={500} style={{ marginBottom: '16px' }}>
-        {title}
-      </Text>
+      <Title mb={20} order={3}>{title}</Title>
       <ScrollArea h={200}>
       <Table highlightOnHover  >
         <Table.Thead>
@@ -47,3 +45,16 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data, title }) => {
 };
 
 export default DataTable;
+function handleLoadingAndError(loadingStates: boolean[], errors: (Error | null)[]) {
+  if (loadingStates.some(loading => loading)) {
+    return <div>Loading data...</div>;
+  }
+
+  for (const error of errors) {
+    if (error) {
+      return <div>Error loading data: {error.message}</div>;
+    }
+  }
+
+  return null;
+}
