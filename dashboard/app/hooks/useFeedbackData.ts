@@ -12,10 +12,11 @@ export function useFeedbackData(pollingInterval = 60000) {
       if (!response.ok) {
         const errorMessage = `Failed to fetch customer feedback: ${response.status} ${response.statusText}`;
         
-        // Log detailed error to the console
+        // log the  detailed error to the console for developer debugging
+        // provide a user friendly error message to the user without the detailed message. 
         console.error(errorMessage);
         
-        // Throw a generic error to be handled by the client
+       
         throw new Error('Failed to load customer feedback. Please try again later.');
       }
       const data = await response.json();

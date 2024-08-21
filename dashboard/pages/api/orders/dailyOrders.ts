@@ -1,6 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
 
+/**
+ * API Route: /api/orders/dailyOrders
+ * 
+ * This route handles fetching daily order counts from the database.
+ * It returns a JSON array where each object represents a date and the number of orders placed on that date.
+ * 
+ * Example Response:
+ * [
+ *   { "date": "2023-08-21", "sales": 10 },
+ *   { "date": "2023-08-22", "sales": 15 },
+ *   ...
+ * ]
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     // Fetch all orders within the desired range

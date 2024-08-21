@@ -4,7 +4,7 @@ import { Card, Title} from '@mantine/core';
 
 interface BarChartData {
   month: string;
-  [key: string]: number | string; // Allows for 'month' to be a string and other dynamic keys to be numbers
+  [key: string]: number | string; // Allows dynamic keys to be string or numbers
 }
 
 interface BarChartSeries {
@@ -20,6 +20,21 @@ interface BarChartCardProps {
   yAxisLabel: string;
 }
 
+/**
+ * BarChartCard Component
+ * 
+ * A reusable component that wraps a BarChart inside a styled Card. 
+ * 
+ * @param {BarChartData[]} data - The data to be displayed in the chart, where each object should include a 'month' key and other dynamic keys corresponding to the series.
+ * @param {BarChartSeries[]} series - The configuration for each data series, including the name and color.
+ * @param {string} title - The title of the card, displayed above the chart.
+ * @param {string} xAxisLabel - The label for the x-axis of the chart.
+ * @param {string} yAxisLabel - The label for the y-axis of the chart.
+ * 
+ * This component is designed to be flexible and reusable, allowing different datasets 
+ * and series configurations to be visualized in a consistent manner. The chart is rendered 
+ * within a Card component, making it easy to use within dashboards or reports.
+ */
 export function BarChartCard({ data, series, title, xAxisLabel, yAxisLabel }: BarChartCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>

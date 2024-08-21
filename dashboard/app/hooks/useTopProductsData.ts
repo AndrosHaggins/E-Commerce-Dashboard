@@ -15,7 +15,8 @@ export function useTopProductsData(pollingInterval = 60000) {
       const response = await fetch('/api/products/getTopProducts');
       if (!response.ok) {
         const errorMessage = `Failed to fetch top products: ${response.status} ${response.statusText}`;
-        
+        // log the  detailed error to the console for developer debugging
+        // provide a user friendly error message to the user without the detailed message. 
         console.error(errorMessage);
         
         throw new Error('Failed to load top products. Please try again later.');
@@ -32,7 +33,8 @@ export function useTopProductsData(pollingInterval = 60000) {
 
   useEffect(() => {
     fetchTopProducts(); // Fetch data on component mount
-
+    // Polling mechanism: 
+    // We use setInterval to periodically refresh the data
     const interval = setInterval(fetchTopProducts, pollingInterval);
     return () => clearInterval(interval); // Cleanup on component unmount
   }, [pollingInterval]);

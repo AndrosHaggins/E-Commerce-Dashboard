@@ -7,9 +7,21 @@ import { usePathname } from 'next/navigation';
 import { SettingsModal } from './SettingsModal';
 import { IconDashboard, IconReport, IconSettings } from '@tabler/icons-react';
 
+/**
+ * Sidebar Component
+ * 
+ * This component renders a sidebar with buttons for navigation and a settings modal. 
+ * The sidebar buttons dynamically update their styles based on the current route, 
+ * and the settings modal can be opened from the sidebar.
+ * 
+ * The component determines which button should be selected based on the current URL path 
+ * and provides a seamless navigation experience. The settings modal is controlled 
+ * via the `useDisclosure` hook to manage its open and close state.
+ */
 export default function Sidebar() {
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
+  // nextjs hook that gets the path from the url, used to control the selected buttons.
   const pathname = usePathname();
 
   // set the selected button correctly based off of url path

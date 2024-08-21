@@ -8,6 +8,8 @@ import { useProductData } from '@/app/hooks/useProductData';
 import { useDashboardStats } from '@/app/hooks/useDashboardStats';
 import { useDailyOrders } from '@/app/hooks/useDailyOrders';
 import { FeedbackData, ProductData, DailyOrder } from '@/types/dashboardTypes';
+import { handleLoadingAndError } from '@/utils/handleLoadingAndError';
+
 
 // Columns for FeedbackTable
 const feedbackColumns = [
@@ -26,30 +28,18 @@ const productColumns = [
 ];
 
 
-function handleLoadingAndError(loadingStates: boolean[], errors: (Error | null)[]) {
-  if (loadingStates.some(loading => loading)) {
-    return (
-      <Center style={{ minHeight: '100vh' }}>
-        <Loader size="lg" />
-      </Center>
-    );
-  }
-
-  for (const error of errors) {
-    if (error) {
-      return (
-        <Center style={{ minHeight: '100vh' }}>
-          <Alert icon={<IconAlertCircle size={16} />} title="Error" color="red" radius="md" variant="filled">
-            {error.message}
-          </Alert>
-        </Center>
-      );
-    }
-  }
-
-  return null;
-}
-
+/**
+ * Dashboard Component
+ * 
+ * The main dashboard component that displays key metrics, customer feedback, product inventory, 
+ * and daily orders using various reusable components such as StatusCard, DataTable, and LineGraphCard.
+ * 
+ * It fetches data from multiple sources using custom hooks and handles loading and error states 
+ * with the handleLoadingAndError utility function.
+ * 
+ * The component formats the fetched data to match the requirements of the displayed components 
+ * (e.g., formatting dates, calculating percentages).
+ */
 export default function Dashboard() {
   const { feedbackData, isLoading: isFeedbackLoading, error: feedbackError } = useFeedbackData(10000);
   const { productData, isLoading: isProductLoading, error: productError } = useProductData(10000);

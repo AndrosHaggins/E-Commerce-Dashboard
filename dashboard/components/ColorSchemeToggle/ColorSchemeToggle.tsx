@@ -1,11 +1,11 @@
 'use client';
-
 import { Menu, UnstyledButton, Group, useMantineColorScheme, MantineColorScheme, Text } from '@mantine/core';
 import { IconChevronDown, IconCheck } from '@tabler/icons-react';
 
 export function ColorSchemeToggle() {
+  // Access the current color scheme and the function to change it
   const { colorScheme, setColorScheme } = useMantineColorScheme();
-
+  // Function to update the color scheme when a menu item is selected
   const handleColorSchemeChange = (value: MantineColorScheme) => {
     setColorScheme(value);
   };

@@ -1,7 +1,29 @@
 // pages/api/stats/getDashboardStats.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
-
+/**
+ * API Route: /api/stats/getDashboardStats
+ * 
+ * This route handles fetching and calculating various statistics for the dashboard, including total revenue, 
+ * new customers, total orders, and customer acquisition rate. It compares the current month's data 
+ * to the previous month's data and returns both the values and the percentage changes.
+ * 
+ * Example Response:
+ * {
+ *   "totalRevenue": "5000.00",
+ *   "totalRevenueChange": "10.00",
+ *   "totalRevenueStatus": "increase",
+ *   "newCustomers": 120,
+ *   "newCustomersChange": 15,
+ *   "newCustomersStatus": "increase",
+ *   "totalOrders": 300,
+ *   "totalOrdersChange": 20,
+ *   "totalOrdersStatus": "increase",
+ *   "acquisitionRate": 50,
+ *   "acquisitionRateChange": 5,
+ *   "acquisitionRateStatus": "increase"
+ * }
+ */
 // Helper functions to get counts for current and previous months
 async function getCustomerAcquisitionsCount(startDate: Date, endDate: Date) {
   return await prisma.customeracquisition.count({

@@ -1,6 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
-
+/**
+ * API Route: /api/products/topProducts
+ * 
+ * This route handles fetching data for the top-selling products based on order quantities.
+ * It returns a JSON array of product objects, each containing the product name and the total quantity sold.
+ * 
+ * If a product ID is null, the product name is returned as 'Unknown Product'.
+ * 
+ * Example Response:
+ * [
+ *   { "product_name": "Product A", "total_quantity_sold": 150 },
+ *   { "product_name": "Unknown Product", "total_quantity_sold": 5 }
+ * ]
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const topProducts = await prisma.orderdetails.groupBy({

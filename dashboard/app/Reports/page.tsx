@@ -7,6 +7,7 @@ import Sidebar from '@/components/Sidebar';
 import Report from './Report';
 
 const ReportPage = () => {
+  // State management for controlling the mobile and desktop sidebar visibility
     const [mobileOpened, { toggle: toggleMobile }] = useDisclosure();
   const [desktopOpened, { toggle: toggleDesktop }] = useDisclosure(true);
   return (
