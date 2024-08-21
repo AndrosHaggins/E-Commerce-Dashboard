@@ -14,7 +14,7 @@ export function PieChartCard({ data, title }: PieChartCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Title pb={20} order={3}>{title}</Title>
-      <PieChart w={300} h={300} withLabelsLine labelsPosition="outside" labelsType="percent" withLabels mx="auto" data={data} />
+      <PieChart withLabelsLine labelsPosition="outside" labelsType="percent"  withTooltip tooltipDataSource="segment" withLabels mx="auto" data={data} />
     </Card>
   );
 }

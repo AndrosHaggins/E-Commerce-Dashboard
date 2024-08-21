@@ -16,9 +16,11 @@ interface BarChartCardProps {
   data: BarChartData[];
   series: BarChartSeries[];
   title: string;
+  xAxisLabel: string;
+  yAxisLabel: string;
 }
 
-export function BarChartCard({ data, series, title }: BarChartCardProps) {
+export function BarChartCard({ data, series, title, xAxisLabel, yAxisLabel }: BarChartCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Title pb={20} order={3}>{title}</Title>
@@ -26,6 +28,8 @@ export function BarChartCard({ data, series, title }: BarChartCardProps) {
         h={300}
         data={data}
         dataKey="month"
+        xAxisLabel={xAxisLabel}
+        yAxisLabel={yAxisLabel}
         series={series}
         tickLine="y"
       />

@@ -1,6 +1,66 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ecommerce Dashboard
+
+## Project Overview
+
+**Ecommerce Dashboard** is a dashboard application designed for an e-commerce store. It provides comprehensive insights into store performance, including sales data, customer acquisition, inventory levels, and more. This project was created as part of a take-home assignment to demonstrate my ability to build a full-stack web application using modern technologies.
+
+## Features
+
+- **Sales Reports**: Visualize sales data with real-time updates.
+- **Customer Acquisition**: Track and analyze customer acquisition sources and trends.
+- **Inventory Management**: Monitor inventory levels and changes.
+- **Customer Feedback**: View and manage customer feedback.
+
+## Technologies Used
+
+- **Frontend**:
+  - React
+  - TypeScript
+  - MantineUI
+  - Tabler Icons
+
+- **Backend**:
+  - Node.js
+  - PostgreSQL
+
+- **Full Stack**:
+  - Next.js (using the App Router)
+  
+- **Deployment**:
+  - AWS App Runner
 
 ## Getting Started
+
+1. **Clone the repository**:
+   ```bash
+   git clone [repository-url]
+   cd dashboard
+    
+2. **Install Dependencies** 
+   npm install --legacy-peer-deps
+
+3. **Set up the environment** 
+    Create a .env file in the root directory (dashboard/).
+    Add any required environment variables, such as database connection strings.
+
+## Running in Development mode
+
+1. **Start the deployment server** 
+    npm run dev
+
+2. **Access the application:** 
+    Open your browser and navigate to http://localhost:3000.
+
+## Building and Running in Production
+
+1. **Build the project** 
+    npm run build
+
+2. **Start the application** 
+    npm run start
+    
+## Usage
+    Once the application is running, you can access the dashboard in your browser. The dashboard provides insights and reports on various aspects of the e-commerce store.
 
 First, run the development server:
 
@@ -13,24 +73,3 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
