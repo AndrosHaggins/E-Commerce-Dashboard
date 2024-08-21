@@ -7,17 +7,18 @@ export interface StatusCardProps {
   title: string;
   value: number;
   type: 'percentage' | 'dollar' | 'number';
-  status?: 'increase' | 'decrease'; // Allow status to be undefined
-  percentageChange?: number; // Allow percentageChange to be undefined
+  status?: 'increase' | 'decrease'; 
+  percentageChange?: number; 
 }
 
 
+// StatusCard component displays a title, a formatted value, and an optional status indicator.
+// The card’s appearance adjusts based on the current theme (light or dark).
 const StatusCard: React.FC<StatusCardProps> = ({ title, value, type, status, percentageChange }) => {
   const { colorScheme } = useMantineColorScheme();
   const backgroundColor = colorScheme === 'dark' ? '#1A1B1E' : '#fcd9b8';
 
- 
-
+  // Format the value based on its type
   const formattedValue = (() => {
     switch (type) {
       case 'percentage':
@@ -30,6 +31,7 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, value, type, status, per
     }
   })();
 
+  // Determine status icon and color if a status is provided
   const statusIcon = status === 'increase' ? '▲' : status === 'decrease' ? '▼' : '';
   const statusColor = status === 'increase' ? 'green' : status === 'decrease' ? 'red' : 'gray';
 
@@ -39,11 +41,8 @@ const StatusCard: React.FC<StatusCardProps> = ({ title, value, type, status, per
       radius="md"
       w="100%"
       h="100%"
-      
       bg={backgroundColor}
-      style={{
-        textAlign: 'left',
-      }}
+      style={{ textAlign: 'left' }}
     >
       <Text size="md" fw={500} mb={8}>
         {title}
