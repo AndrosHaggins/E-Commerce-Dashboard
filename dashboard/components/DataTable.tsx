@@ -58,16 +58,4 @@ const DataTable: React.FC<DataTableProps> = ({ columns, data, title }) => {
 };
 
 export default DataTable;
-function handleLoadingAndError(loadingStates: boolean[], errors: (Error | null)[]) {
-  if (loadingStates.some(loading => loading)) {
-    return <div>Loading data...</div>;
-  }
 
-  for (const error of errors) {
-    if (error) {
-      return <div>Error loading data: {error.message}</div>;
-    }
-  }
-
-  return null;
-}

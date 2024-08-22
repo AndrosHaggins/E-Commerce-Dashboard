@@ -1,7 +1,6 @@
-import { Stack, Center, Loader, Alert } from '@mantine/core';
-import { IconAlertCircle } from '@tabler/icons-react';
-import { BarChartCard } from '@/components/BarChartCard';
-import { PieChartCard } from '@/components/PieChartCard';
+import { Stack } from '@mantine/core';
+import  BarChartCard  from '@/components/BarChartCard';
+import  PieChartCard  from '@/components/PieChartCard';
 import { useTopProductsData } from '@/app/hooks/useTopProductsData';
 import { useCustomerAcquisitionSourcesData } from '@/app/hooks/useCustomerAcquisitionSourcesData';
 import { handleLoadingAndError } from '@/utils/handleLoadingAndError';
@@ -43,7 +42,7 @@ export default function Report() {
   return (
     <Stack>
       <PieChartCard data={pieData} title="Customer Acquisition Sources" />
-      <BarChartCard data={barData} xAxisLabel="label for x axis" yAxisLabel="yAxisLabel" series={barSeries} title="Product Popularity" />
+      <BarChartCard data={barData} xAxisLabel="BarkMart Products" yAxisLabel="Total Sold" series={barSeries} title="Product Popularity" />
     </Stack>
   );
 }

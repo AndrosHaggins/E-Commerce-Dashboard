@@ -1,7 +1,5 @@
 'use client';
-
 import { Card, Text, useMantineColorScheme, Title } from '@mantine/core';
-
 
 export interface StatusCardProps {
   title: string;
@@ -10,7 +8,6 @@ export interface StatusCardProps {
   status?: 'increase' | 'decrease'; 
   percentageChange?: number; 
 }
-
 
 /**
  * StatusCard Component

@@ -35,7 +35,7 @@ interface BarChartCardProps {
  * and series configurations to be visualized in a consistent manner. The chart is rendered 
  * within a Card component, making it easy to use within dashboards or reports.
  */
-export function BarChartCard({ data, series, title, xAxisLabel, yAxisLabel }: BarChartCardProps) {
+const BarChartCard: React.FC<BarChartCardProps> = ({ data, series, title, xAxisLabel, yAxisLabel }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Title pb={20} order={3}>{title}</Title>
@@ -51,3 +51,5 @@ export function BarChartCard({ data, series, title, xAxisLabel, yAxisLabel }: Ba
     </Card>
   );
 }
+
+export default BarChartCard;

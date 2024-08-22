@@ -15,7 +15,7 @@ interface SettingsModalProps {
  * @param {boolean} opened - Controls whether the modal is open or closed.
  * @param {() => void} onClose - Callback function to close the modal.
  */
-export function SettingsModal({ opened, onClose }: SettingsModalProps) {
+const SettingsModal: React.FC<SettingsModalProps> = ({ opened, onClose }) => {
   return (
     <Modal
       opened={opened}
@@ -33,3 +33,5 @@ export function SettingsModal({ opened, onClose }: SettingsModalProps) {
     </Modal>
   );
 }
+
+export default SettingsModal;

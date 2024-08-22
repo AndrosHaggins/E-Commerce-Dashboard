@@ -1,11 +1,14 @@
 'use client';
-import { Menu, UnstyledButton, Group, useMantineColorScheme, MantineColorScheme, Text } from '@mantine/core';
+/**
+ * A component that provides a dropdown menu for selecting the application's color scheme.
+ * Users can choose between 'Light', 'Dark', and 'Auto' modes.
+ * The selected color scheme is reflected across the app and is managed using Mantine's color scheme context.
+ */
+import { Menu, UnstyledButton, Group, useMantineColorScheme, MantineColorScheme, Text, Button } from '@mantine/core';
 import { IconChevronDown, IconCheck } from '@tabler/icons-react';
 
 export function ColorSchemeToggle() {
-  // Access the current color scheme and the function to change it
   const { colorScheme, setColorScheme } = useMantineColorScheme();
-  // Function to update the color scheme when a menu item is selected
   const handleColorSchemeChange = (value: MantineColorScheme) => {
     setColorScheme(value);
   };

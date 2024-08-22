@@ -1,10 +1,8 @@
 "use client"
-import { ColorSchemeToggle } from '../components/ColorSchemeToggle/ColorSchemeToggle';
 import { Group, AppShell, Burger, Title, Box} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import Dashboard from '@/components/Dashboard';
+import Dashboard from '@/app/Dashboard';
 import Sidebar from '@/components/Sidebar';
-
 
 export default function HomePage() {
   // State management for controlling the mobile and desktop sidebar visibility

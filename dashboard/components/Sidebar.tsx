@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Button, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { usePathname } from 'next/navigation';
-import { SettingsModal } from './SettingsModal';
+import  SettingsModal  from './SettingsModal';
 import { IconDashboard, IconReport, IconSettings } from '@tabler/icons-react';
 
 /**

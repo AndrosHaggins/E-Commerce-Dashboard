@@ -1,6 +1,5 @@
-import { Grid, Box, Loader, Center, Alert} from '@mantine/core';
+import { Grid, Box} from '@mantine/core';
 import StatusCard from '@/components/StatusCard'; 
-import { IconAlertCircle } from '@tabler/icons-react';
 import DataTable from '@/components/DataTable';
 import LineGraphCard from '@/components/LineGraphCard';
 import { useFeedbackData } from '@/app/hooks/useFeedbackData';
@@ -135,9 +134,10 @@ export default function Dashboard() {
         </Grid.Col>
       </Grid>
       <LineGraphCard 
-        data={formattedDailyOrders} 
-        title="Daily Orders" 
-        seriesName="sales" 
+      data={formattedDailyOrders} 
+      title="Daily Orders" 
+      seriesName="sales" 
+      dataKey="date" // Specify the key to be used for the x-axis
       />
     </>
   );

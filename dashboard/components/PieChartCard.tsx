@@ -22,7 +22,7 @@ interface PieChartCardProps {
  * to be visualized in a consistent manner. The chart is rendered within a Card component, 
  * making it easy to use within dashboards or reports.
  */
-export function PieChartCard({ data, title }: PieChartCardProps) {
+const PieChartCard: React.FC<PieChartCardProps> = ({ data, title }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Title pb={20} order={3}>{title}</Title>
@@ -30,3 +30,5 @@ export function PieChartCard({ data, title }: PieChartCardProps) {
     </Card>
   );
 }
+
+export default PieChartCard;
